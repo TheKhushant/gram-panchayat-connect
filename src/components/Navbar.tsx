@@ -1,23 +1,25 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone } from "lucide-react";
 
 const navItems = [
-  { label: "मुख्यपृष्ठ", href: "#home" },
-  { label: "माहिती", href: "#about" },
-  { label: "योजना", href: "#schemes" },
-  { label: "सेवा", href: "#services" },
-  { label: "प्रकल्प", href: "#projects" },
-  { label: "गॅलरी", href: "#gallery" },
-  { label: "संपर्क", href: "#contact" },
+  { label: "मुख्यपृष्ठ", href: "/" },
+  { label: "माहिती", href: "/about" },
+  { label: "योजना", href: "/schemes" },
+  { label: "सेवा", href: "/services" },
+  { label: "प्रकल्प", href: "/projects" },
+  { label: "गॅलरी", href: "/gallery" },
+  { label: "संपर्क", href: "/contact" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur shadow-sm">
       <div className="container mx-auto flex items-center justify-between py-3 px-4">
-        <a href="#home" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-lg">ग्रा</span>
           </div>
@@ -25,18 +27,21 @@ const Navbar = () => {
             <p className="font-bold text-primary leading-tight text-sm">ग्रामपंचायत</p>
             <p className="text-xs text-muted-foreground leading-tight">Amgaon (Deoli)</p>
           </div>
-        </a>
+        </Link>
 
-        {/* Desktop nav */}
         <ul className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => (
             <li key={item.href}>
-              <a
-                href={item.href}
-                className="px-3 py-2 rounded-md text-sm font-medium text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+              <Link
+                to={item.href}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  location.pathname === item.href
+                    ? "bg-primary/15 text-primary"
+                    : "text-foreground hover:bg-primary/10 hover:text-primary"
+                }`}
               >
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -59,19 +64,22 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile nav */}
       {open && (
         <div className="lg:hidden border-t bg-card px-4 pb-4 animate-fade-in-up">
           <ul className="flex flex-col gap-1 pt-2">
             {navItems.map((item) => (
               <li key={item.href}>
-                <a
-                  href={item.href}
+                <Link
+                  to={item.href}
                   onClick={() => setOpen(false)}
-                  className="block px-3 py-2.5 rounded-md text-sm font-medium text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                  className={`block px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+                    location.pathname === item.href
+                      ? "bg-primary/15 text-primary"
+                      : "text-foreground hover:bg-primary/10 hover:text-primary"
+                  }`}
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
