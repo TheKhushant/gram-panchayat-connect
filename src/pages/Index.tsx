@@ -7,6 +7,7 @@ const Index = () => {
   return (
     <MainLayout>
       <HeroSection />
+      <HeroSection />
       <QuickActions />
       <StatsCounter />
     </MainLayout>
